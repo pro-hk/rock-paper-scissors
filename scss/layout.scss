@@ -11,11 +11,22 @@ img {
   h1 {
     font-size: 32px;
     margin: 100px 0;
+    text-align: center;
+    span {
+      display: block;
+      &.sub {
+        font-size: 20px;
+        margin-top: 20px;
+      }
+    }
   }
   #com {
     margin-bottom: 50px;
     ul {
       display: flex;
+      li {
+        user-select: none;
+      }
     }
   }
   #player {
@@ -28,11 +39,38 @@ img {
         margin: 0 10px;
         border: 5px solid transparent;
         border-radius: 100%;
+        user-select: none;
         &.on {
           border-color: #000;
         }
         img {
           width: 80px;
+        }
+      }
+    }
+  }
+  #result {
+    ul {
+      display: flex;
+      justify-content: center;
+      li {
+        @include box(40px);
+        color: $white-color;
+        border-radius: 100%;
+        @include flexCenter();
+        overflow: hidden;
+        margin: 0 10px;
+        &.win {
+          background-color: #00f;
+          @include longShadow(darken(#00f, 20), right, 40);
+        }
+        &.lose {
+          background-color: #f00;
+          @include longShadow(darken(#f00, 20), right, 40);
+        }
+        &.draw {
+          background-color: #0f0;
+          @include longShadow(darken(#0f0, 20), right, 40);
         }
       }
     }

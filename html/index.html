@@ -10,7 +10,10 @@
   </head>
   <body>
     <div class="wrap">
-      <h1>ROCK-PAPER-SCISSORS</h1>
+      <h1>
+        <span class="main">ROCK-PAPER-SCISSORS</span>
+        <span class="sub">a.k.a samsepan</span>
+      </h1>
       <div id="com">
         <ul>
           <li>
@@ -18,10 +21,10 @@
             <!-- svg : 이미지 확대 축소해도 안깨짐 -->
           </li>
           <li>
-            <img src="../images/paper.svg" alt="" />
+            <img src="../images/scissors.svg" alt="" />
           </li>
           <li>
-            <img src="../images/scissors.svg" alt="" />
+            <img src="../images/paper.svg" alt="" />
           </li>
         </ul>
       </div>
@@ -31,12 +34,19 @@
             <img src="../images/rock.svg" alt="" />
           </li>
           <li>
-            <img src="../images/paper.svg" alt="" />
-          </li>
-          <li>
             <img src="../images/scissors.svg" alt="" />
           </li>
+          <li>
+            <img src="../images/paper.svg" alt="" />
+          </li>
         </ul>
+      </div>
+      <div id="result">
+        <!-- <ul>
+          <li class="win">W</li>
+          <li class="lose">L</li>
+          <li class="draw">D</li>
+        </ul> -->
       </div>
     </div>
   </body>
@@ -46,10 +56,16 @@
     tempArray.forEach((element, index, array) => {
       console.log(element, "===", index, "===", array);
     });
+
     const comList = document.querySelectorAll(".wrap #com ul li");
     const players = document.querySelectorAll(".wrap #player ul li");
-    const playersList = document.querySelectorAll(".wrap #player ul");
+    const playersList = document.querySelector(".wrap #player ul");
     // 배열처럼 생긴 유사배열 nodeList
+
+    const result = document.querySelector(".wrap #result");
+    const resultList = document.createElement("ul");
+    result.appendChild(resultList);
+
     let sel = 0;
 
     /*
@@ -58,7 +74,6 @@
     } */
     console.log(comList);
 
-    let count = 0;
     // setTimeout(() => {
     //   console.log("나는 한번만 합니다.");
     // }, 0);
@@ -68,29 +83,56 @@
         // console.log(element);
       });
       // comList[count].style.display = "block";
-      comList[sel].style.display = "block";
       sel = Math.floor(Math.random() * 3);
+      comList[sel].style.display = "block";
       // if (count >= 3) {
       //   count = 0;
       // }
       // console.log("나는 setInterval이 찍는 콘솔-멈출때까지 계속 진행");
     };
+    comChoice();
     let clearIdx = setInterval(comChoice, 30);
     // 비동기 - a싱크로나이즈 .. setInterval, setTimeout, node에 걸린 이벤트, ajax
     // 동기 - 싱크로나이즈
     // 동기 실행 후 비동기 실행
     // console.log("나는 setInterval보다 먼저 실행될까요? 나중에 실행될까요?");
+    let count = 0;
+    let gameIdx;
     players.forEach((element, index) => {
       element.addEventListener("click", () => {
-        clearInterval(clearIdx);
-        setTimeout(() => {
+        clearInterval(clearIdx); // 멈추기
+        element.classList.add("on");
+        playersList.classList.add("prevent");
+        if (sel === index) {
+          resultList.innerHTML += "<li class='draw'>D</li>";
+          // console.log("비김");
+        } else if ((sel === 0 && index === 2) || (sel === 1 && index === 0) || (sel === 2 && index === 1)) {
+          resultList.innerHTML += "<li class='win'>W</li>";
+          // console.log("이김");
+        } else {
+          resultList.innerHTML += "<li class='lose'>L</li>";
+          // console.log("짐");
+        }
+        console.log(sel, "===", index);
+        gameIdx = setTimeout(() => {
           clearIdx = setInterval(comChoice, 30);
           element.classList.remove("on");
           playersList.classList.remove("prevent");
         }, 1000);
-        element.classList.add("on");
-        playersList.classList.add("prevent");
+        count++;
+        if (count >= 3) {
+          clearTimeout(gameIdx);
+        }
       });
     });
   </script>
+
+  <!-- <script>
+    const num01 = 10; // number
+    const num02 = "10"; // string
+    console.log(num01 == num02); // boolean(true/false)
+    // !: 부정 --- num01 != num02 : 다르다 / num01 = !num02 : num02 부정
+    console.log(num01 !== num02);
+    // === : 타입까지 비교
+  </script> -->
 </html>
