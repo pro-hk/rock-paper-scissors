@@ -76,3 +76,39 @@ img {
     }
   }
 }
+
+#regame {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 99;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  h2 {
+    font-size: 32px;
+    color: $white-color;
+    margin-bottom: 50px;
+  }
+  button {
+    padding: 50px 100px;
+    border: none;
+    outline: none;
+    background-color: rgb(224, 127, 0);
+    overflow: hidden;
+    border-radius: 10px;
+    font-size: 24px;
+    color: $white-color;
+    text-transform: uppercase;
+    box-shadow: 0 10px 0 darken(rgb(224, 127, 0), 10);
+    transition: 0.1;
+    &:active {
+      transform: translateY(10px);
+      box-shadow: 0 0 0 darken(rgb(224, 127, 0), 10);
+    }
+  }
+}

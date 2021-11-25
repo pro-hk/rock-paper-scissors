@@ -49,6 +49,10 @@
         </ul> -->
       </div>
     </div>
+    <div id="regame">
+      <h2>To Be Continue~~</h2>
+      <button id="btnRestart">restart game</button>
+    </div>
   </body>
   <script>
     const tempArray = ["apple", "banana", "orange"];
@@ -65,6 +69,9 @@
     const result = document.querySelector(".wrap #result");
     const resultList = document.createElement("ul");
     result.appendChild(resultList);
+
+    const regame = document.querySelector("#regame");
+    const btnRestart = document.querySelector("#btnRestart");
 
     let sel = 0;
 
@@ -90,7 +97,7 @@
       // }
       // console.log("나는 setInterval이 찍는 콘솔-멈출때까지 계속 진행");
     };
-    comChoice();
+    // comChoice();
     let clearIdx = setInterval(comChoice, 30);
     // 비동기 - a싱크로나이즈 .. setInterval, setTimeout, node에 걸린 이벤트, ajax
     // 동기 - 싱크로나이즈
@@ -113,7 +120,7 @@
           resultList.innerHTML += "<li class='lose'>L</li>";
           // console.log("짐");
         }
-        console.log(sel, "===", index);
+        // console.log(sel, "===", index);
         gameIdx = setTimeout(() => {
           clearIdx = setInterval(comChoice, 30);
           element.classList.remove("on");
@@ -121,18 +128,21 @@
         }, 1000);
         count++;
         if (count >= 3) {
-          clearTimeout(gameIdx);
+          regame.style.display = "flex";
+          count = 0;
+          btnRestart.addEventListener("click", () => {
+            regame.style.display = "none";
+            resultList.innerHTML = "";
+            gameIdx = setTimeout(() => {
+              clearIdx = setInterval(comChoice, 30);
+              element.classList.remove("on");
+              playersList.classList.remove("prevent");
+            }, 10);
+            clearTimeout(gameIdx);
+          });
         }
+        console.log(count);
       });
     });
   </script>
-
-  <!-- <script>
-    const num01 = 10; // number
-    const num02 = "10"; // string
-    console.log(num01 == num02); // boolean(true/false)
-    // !: 부정 --- num01 != num02 : 다르다 / num01 = !num02 : num02 부정
-    console.log(num01 !== num02);
-    // === : 타입까지 비교
-  </script> -->
 </html>
